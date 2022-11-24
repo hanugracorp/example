@@ -7,19 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Nuclei - Vulnerability Scan
         uses: projectdiscovery/nuclei-action@main
         with:
           target: https://www.bosch.co.id/
-
+          flags: "-severity critical,high,medium,low -stats"
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nuclei.log
           path: nuclei.log
-
-      - name: GitHub Security Dashboard Alerts update
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: nuclei.sarif
